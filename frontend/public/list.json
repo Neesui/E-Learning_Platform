@@ -1,0 +1,66 @@
+[
+    {
+        "id": 1,
+        "title": "Web Development ",
+        "description": "2 monhs curse",
+        "imageUrl": "https://miro.medium.com/v2/resize:fit:1200/1*V-Jp13LvtVc2IiY2fp4qYw.jpeg"
+   },
+  
+   {
+       "id": 2,
+        "title": "UI/UX Design",
+        "description": "2 monhs curse",
+        "imageUrl": "https://img.freepik.com/free-vector/frontend-development-concept-website-interface-design-improvement-web-page-programming-coding-testing-it-profession-isolated-flat-vector-illustration_613284-2357.jpg"
+  
+   },
+   {
+       "id": 3,
+        "title": "Graphics Designer",
+        "description": "2 monhs curse",
+        "imageUrl": "https://inspiria.edu.in/wp-content/uploads/Career-in.-graphic-designers.webp"
+   },
+
+   {
+       "id": 4,
+        "title": "Python ",
+        "description": "2 monhs curse",
+        "imageUrl": "https://www.unite.ai/wp-content/uploads/2022/04/AI-Python-Libraries-1000x600.png"
+   },
+
+   {
+       "id": 5,
+        "title": "FrontEnd Development",
+        "description": "2 monhs curse",
+        "imageUrl": "https://img.freepik.com/free-vector/frontend-development-concept-website-interface-design-improvement-web-page-programming-coding-testing-it-profession-isolated-flat-vector-illustration_613284-2357.jpg"
+   },
+
+   {
+       "id": 6,
+        "title": "Backend Development",
+        "description": "2 monhs curse",
+        "imageUrl": "https://www.ishir.com/wp-content/uploads/2023/03/backend-development-languages-ISHIR.png"
+   },
+   
+   {
+       "id": 7,
+       "category": "Courses",
+        "title": "Mobile Programming ",
+        "description": "2 monhs curse",
+        "imageUrl": "https://media.licdn.com/dms/image/D4D12AQHTBItEVaAEjA/article-cover_image-shrink_720_1280/0/1695881843199?e=2147483647&v=beta&t=Clzdoso8VF0e-Ftssu4yBbnHz0K8gBx1ppN7FIfydJY"
+   },
+   {
+    "id": 8,
+    "category": "Courses",
+     "title": "Mobile Programming ",
+     "description": "2 monhs curse",
+     "imageUrl": "https://media.licdn.com/dms/image/D4D12AQHTBItEVaAEjA/article-cover_image-shrink_720_1280/0/1695881843199?e=2147483647&v=beta&t=Clzdoso8VF0e-Ftssu4yBbnHz0K8gBx1ppN7FIfydJY"
+},
+{
+    "id": 9,
+    "category": "Courses",
+     "title": "Mobile Programming ",
+     "description": "2 monhs curse",
+     "imageUrl": "https://media.licdn.com/dms/image/D4D12AQHTBItEVaAEjA/article-cover_image-shrink_720_1280/0/1695881843199?e=2147483647&v=beta&t=Clzdoso8VF0e-Ftssu4yBbnHz0K8gBx1ppN7FIfydJY"
+}
+    
+]

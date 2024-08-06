@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-blue-200;
+}
+.foont{
+  font-family: 'Times New Roman', Times, serif;
+}
+.course-title{
+  font-family: 'Courier New', Courier,;
+  font:bold;
+}
+
+@keyframes zoro {
+    from {
+      transform: translateX(-0.5rem);
+    }
+    to {
+      transform: translateX(0.5rem);
+    }
+  }
+  /* 153B44 
+  044343
+  BEF992 green*/
+  
+  .animation-zoro {
+    animation: zoro 1s linear infinite alternate;
+  }  
