@@ -1,66 +1,37 @@
 [
     {
-        "id": 1,
-        "title": "Web Development ",
-        "description": "2 monhs curse",
-        "imageUrl": "https://miro.medium.com/v2/resize:fit:1200/1*V-Jp13LvtVc2IiY2fp4qYw.jpeg"
+       "category_id": 1,
+        "name": "Web Development",
+        "description": "Learn to build websites and web applications.",
+        "image_url": "https://wayspire.in/wp-content/uploads/2022/11/web-development.jpg",
+        "created_at": "2023-01-01T12:00:00Z",
+        "updated_at": ""
    },
   
    {
-       "id": 2,
-        "title": "UI/UX Design",
-        "description": "2 monhs curse",
-        "imageUrl": "https://img.freepik.com/free-vector/frontend-development-concept-website-interface-design-improvement-web-page-programming-coding-testing-it-profession-isolated-flat-vector-illustration_613284-2357.jpg"
-  
+    "category_id": 2,
+    "name": "Mobile Programming",
+    "description": "Develop mobile applications for Android and iOS.",
+    "image_url": "https://greymatter.com/wp-content/uploads/2021/12/Mobile-app-development-image.jpg",
+    "created_at": "2023-02-10T12:00:00Z",
+    "updated_at": ""
    },
    {
-       "id": 3,
-        "title": "Graphics Designer",
-        "description": "2 monhs curse",
-        "imageUrl": "https://inspiria.edu.in/wp-content/uploads/Career-in.-graphic-designers.webp"
-   },
-
-   {
-       "id": 4,
-        "title": "Python ",
-        "description": "2 monhs curse",
-        "imageUrl": "https://www.unite.ai/wp-content/uploads/2022/04/AI-Python-Libraries-1000x600.png"
+        "category_id": 3,
+        "name": "UI/UX Design",
+        "description": "Master the art of designing intuitive and user-friendly interfaces.",
+        "image_url": "https://stridefuture.com/wp-content/uploads/Recent-Trends-on-UI-UX.jpg",
+        "created_at": "2023-03-05T12:00:00Z",
+        "updated_at": ""
    },
 
    {
-       "id": 5,
-        "title": "FrontEnd Development",
-        "description": "2 monhs curse",
-        "imageUrl": "https://img.freepik.com/free-vector/frontend-development-concept-website-interface-design-improvement-web-page-programming-coding-testing-it-profession-isolated-flat-vector-illustration_613284-2357.jpg"
-   },
-
-   {
-       "id": 6,
-        "title": "Backend Development",
-        "description": "2 monhs curse",
-        "imageUrl": "https://www.ishir.com/wp-content/uploads/2023/03/backend-development-languages-ISHIR.png"
-   },
-   
-   {
-       "id": 7,
-       "category": "Courses",
-        "title": "Mobile Programming ",
-        "description": "2 monhs curse",
-        "imageUrl": "https://media.licdn.com/dms/image/D4D12AQHTBItEVaAEjA/article-cover_image-shrink_720_1280/0/1695881843199?e=2147483647&v=beta&t=Clzdoso8VF0e-Ftssu4yBbnHz0K8gBx1ppN7FIfydJY"
-   },
-   {
-    "id": 8,
-    "category": "Courses",
-     "title": "Mobile Programming ",
-     "description": "2 monhs curse",
-     "imageUrl": "https://media.licdn.com/dms/image/D4D12AQHTBItEVaAEjA/article-cover_image-shrink_720_1280/0/1695881843199?e=2147483647&v=beta&t=Clzdoso8VF0e-Ftssu4yBbnHz0K8gBx1ppN7FIfydJY"
-},
-{
-    "id": 9,
-    "category": "Courses",
-     "title": "Mobile Programming ",
-     "description": "2 monhs curse",
-     "imageUrl": "https://media.licdn.com/dms/image/D4D12AQHTBItEVaAEjA/article-cover_image-shrink_720_1280/0/1695881843199?e=2147483647&v=beta&t=Clzdoso8VF0e-Ftssu4yBbnHz0K8gBx1ppN7FIfydJY"
-}
+       "category_id": 4,
+        "name": "Python",
+        "description": "Learn Python programming from beginner to advanced levels.",
+        "image_url": "https://www.unite.ai/wp-content/uploads/2022/04/AI-Python-Libraries-1000x600.png",
+        "created_at": "2023-04-01T12:00:00Z",
+        "updated_at": ""
+   }
     
 ]

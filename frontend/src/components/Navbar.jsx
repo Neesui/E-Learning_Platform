@@ -1,19 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../public/logoooo.png';
-import { Link } from 'react-router-dom';
+import SearchBox from './SearchBox';
 
 function Navbar() {
+    const [isStudent, setIsStudent] = useState(false);
+    const [student, setStudent] = useState(null);
+    const location = useLocation(); // Hook to get current route
+
+    useEffect(() => {
+        // Function to check authentication status
+        const checkAuthentication = () => {
+            const storedStudent = localStorage.getItem('Nisha');
+            if (storedStudent) {
+                try {
+                    const parsedStudent = JSON.parse(storedStudent);
+                    setStudent(parsedStudent);
+                    setIsStudent(true);
+                } catch (error) {
+                    console.error("Error parsing student data:", error);
+                    localStorage.removeItem('Nisha'); // Clear the corrupted data
+                    setIsStudent(false); // Update state to reflect no student logged in
+                }
+            } else {
+                setIsStudent(false); // Update state if no student data is present
+            }
+        };
+
+        // Check authentication status on location change
+        checkAuthentication();
+    }, [location]); // Dependency array includes location to handle navigation changes
+
+    const handleLogout = () => {
+        localStorage.removeItem("Nisha");
+        setIsStudent(false); // Update state on logout
+    };
+
     const navItems = (
         <>
-          <li><Link to="/" className='text-white text-[3vh]'>Home</Link></li>
-          <li><Link to="/aboutus" className='text-white text-[3vh]'>About us</Link></li>
-          <li><Link to="/courses" className='text-white text-[3vh]'>Courses</Link></li>
-          <li><Link to="/blogs" className='text-white text-[3vh]'>Blogs</Link></li>
+            <li><Link to="/" className='text-white text-[4vh] '>Home</Link></li>
+            <li><Link to="/aboutus" className='text-white text-[4vh]'>About us</Link></li>
+            <li><Link to="/courses" className='text-white text-[4vh]'>Courses</Link></li> 
         </>
-      );
+    );
 
     return (
-        <div className="h-[90px] shadow-xl  pb-[16vh] fixed top-0 left-0 right-0 z-40 bg-[#00224D]">
+        <div className="h-[90px] shadow-xl pb-[16vh] fixed top-0 left-0 right-0 z-40 bg-[#00224D]">
             <div className="navbar">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -31,31 +63,35 @@ function Navbar() {
                                     d="M4 6h16M4 12h8m-8 6h16" />
                             </svg>
                         </div>
-                        <ul
+                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-1 shadow">
+                            className="menu menu-sm  dropdown-content ">
                             {navItems}
-                        </ul>
+                        </ul> 
                     </div>
                     <figure className='w-[130px] h-[85px] ml-[5vh] mr-[5vh]'>
                         <img src={logo} className='w-[130px] h-[95px]' alt="logo"/>
                     </figure>
-                    <div className="hidden md:block ml-6 mt-3">
-                        <label className="input input-bordered flex items-center m-0 bg-white mr-[20vh]">
-                            <input type="text" className="grow placeholder-gray-500" placeholder="Search" />
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="black" className="h-4 w-4 opacity-200">
-                                <path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" />
-                            </svg>
-                        </label>
-                    </div>
+                <SearchBox />
                 </div>
                 <div className='navbar-end'>
-                    <div className="navbar-center hidden lg:flex mr-16">
-                        <ul className="menu menu-horizontal px-1 space-x-3 mt-4 font-bold">{navItems}</ul>
+                    <div className="navbar-center  mr-16">
+                        <ul className="menu menu-horizontal px-1 space-x-9 text-white mt-4 font-bold">{navItems}</ul>
                     </div>
-                    <div className="flex items-center space-x-6 pr-[10vh] mt-4">
-                        <button className="btn hover:bg-[#74E291] hover:border-[#74E291]">Register</button>
-                        <button className="btn hover:bg-red-500 hover:border-red-500 hover:text-white">Login</button>
+                    <div className="flex items-center space-x-6 pr-[10vh] mt-2">
+                        {isStudent ? (
+                            <Link to="/StudentDashboard">
+                                <img 
+                                    src={student?.profilePicture || 'https://www.icon0.com/free/static2/preview2/stock-photo-cute-cartoon-girl-in-glasses-avatar-people-icon-character-cartoo-33356.jpg'} 
+                                    alt="Profile"
+                                    className="w-14 h-14 rounded-full border-2 border-white  object-cover shadow-lg"
+                                />
+                            </Link>
+                        ) : (
+                            <Link to="/Login">
+                                <button className="btn text-[3vh] font-bold hover:bg-red-500 hover:border-red-500 hover:text-white">Login</button>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

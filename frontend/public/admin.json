@@ -1,0 +1,14 @@
+{
+  "_id": "63a9f0fea9a0a3e5f16bfbef",
+  "username": "Admin",
+  "password": "Admin@11", // Hashed password
+  "email": "admin@gmail.com",
+  "fullName": "Ranju Admin",
+  "role": "admin",
+  "dateJoined": "2023-01-01T00:00:00.000Z",
+  "lastLogin": "2023-01-10T15:32:00.000Z",
+  "profilePicture": "https://example.com/profile/admin.jpg",
+  "status": "active",
+   "createdAt": "2023-01-01T00:00:00.000Z",
+  "updatedAt": "2023-01-10T15:32:00.000Z"
+}

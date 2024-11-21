@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-blue-200;
+  @apply bg-[#defdf9];
 }
 .foont{
   font-family: 'Times New Roman', Times, serif;
