@@ -76,15 +76,15 @@ function OurCourses() {
               className="w-full h-48 object-cover rounded-md" // Fixed height and object-fit for consistent image sizes
             />
             <div className="mt-2 flex-grow">
-              <p className="font-bold">{course.name || "Untitled Course"}</p>
+              <p className="font-bold">{course.courseName || "Untitled Course"}</p>
               <p className="text-gray-500">{course.description || "No description available."}</p>
             </div>
-            {/* <button
+            <button
               className="mt-4 bg-yellow-500 hover:bg-purple-600 font-bold text-white py-2 px-4 rounded-lg w-full"
               onClick={() => handleEnrollClick(course._id)} // Pass course ID to the handleEnrollClick function
             >
               Enroll Now
-            </button> */}
+            </button>
           </div>
         ))}
       </div>

@@ -6,29 +6,19 @@ import { useNavigate } from 'react-router-dom';
 const ViewCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();  // Initialize navigate from useNavigate hook
+  const navigate = useNavigate();
 
   // Fetch courses on component mount
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get('http://localhost:4001/courses/getCourses'); // Corrected endpoint to fetch all courses
-        const {courses} = res.data
-        const courses2 = courses || [ ]
-        // Log the response data to check if it's correct
-        console.log('Fetched Courses:', res.data.courses);
-        
-        // Show success toast with meaningful message
-        toast.success('Courses loaded successfully!');
-        
-        // Set the courses data
-        // setCourses(Array.isArray(res.data) ? res.data.courses : []);
-        setCourses(courses2)
+        const res = await axios.get('http://localhost:4001/courses/getCourses');
+        const { courses } = res.data;
+        setCourses(courses || []);
         setLoading(false);
+        toast.success('Courses loaded successfully!');
       } catch (err) {
         console.error('Error fetching courses:', err);
-        
-        // Show error toast with more specific message
         toast.error('Failed to load courses. Please try again later.');
         setLoading(false);
       }
@@ -40,22 +30,20 @@ const ViewCourses = () => {
   // Delete course handler
   const handleDelete = async (courseId) => {
     try {
-      await axios.delete(`http://localhost:4001/courses/${courseId}`); // Adjust the URL for the delete request
-      setCourses(courses.filter(course => course._id !== courseId)); // Update the courses state to remove the deleted course
-      toast.success('Course deleted successfully!');
+      const res = await axios.delete(`http://localhost:4001/courses/delete/${courseId}`);
+      if (res.status === 200) {
+        setCourses(courses.filter(course => course._id !== courseId));  // Remove deleted course from UI
+        toast.success('Course deleted successfully!');
+      }
     } catch (err) {
-      console.error('Error deleting course:', err);
+      console.error('Error deleting course:', err.response ? err.response.data : err.message);
       toast.error('Failed to delete course. Please try again.');
     }
   };
 
-  // Update course handler (you can implement this based on your requirement)
+  // Update course handler (implement as per your app's flow)
   const handleUpdate = (courseId) => {
-    // Redirect to the update page or show an update modal (You can implement this as per your app flow)
-    console.log('Updating course with ID:', courseId);
-    // For example, navigate to an update page:
     navigate(`/UpdateCourse/${courseId}`);
-    // toast.info('Update functionality not implemented.');
   };
 
   return (

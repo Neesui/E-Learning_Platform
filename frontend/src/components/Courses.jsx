@@ -6,6 +6,9 @@ function Courses() {
   const { keyword = "" } = useParams();
   const [categories, setCategories] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedLevels, setSelectedLevels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -27,7 +30,9 @@ function Courses() {
       const response = await axios.get('http://localhost:4001/courses/getCourses', {
         params: { keyword }
       });
-      setCourses(response.data.courses || []);
+      const allCourses = response.data.courses || [];
+      setCourses(allCourses);
+      setFilteredCourses(allCourses); // Initially display all courses
     } catch (error) {
       console.error('Error fetching courses:', error);
       setError('Failed to load courses.');
@@ -48,6 +53,34 @@ function Courses() {
     }
   };
 
+  // Filter courses based on selected categories and levels
+  const applyFilters = () => {
+    let filtered = courses;
+
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter((course) =>
+        selectedCategories.includes(course.categoryId)
+      );
+    }
+
+    if (selectedLevels.length > 0) {
+      filtered = filtered.filter((course) =>
+        selectedLevels.includes(course.level)
+      );
+    }
+
+    setFilteredCourses(filtered);
+  };
+
+  // Handle category checkbox change
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategories((prev) =>
+      prev.includes(categoryId)
+        ? prev.filter((id) => id !== categoryId) // Remove if already selected
+        : [...prev, categoryId]
+    );
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       await fetchCategories();
@@ -57,53 +90,58 @@ function Courses() {
     fetchData();
   }, [keyword]);
 
+  // Re-apply filters when selected categories or levels change
+  useEffect(() => {
+    applyFilters();
+  }, [selectedCategories, selectedLevels]);
+
   if (loading) return <p className="text-center">Loading...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
 
-  // Extract unique levels from categories
-  const levels = [...new Set(categories.map(category => category.level))];
+  // Extract unique levels from courses
+  const levels = [...new Set(courses.map((course) => course.level))];
 
   return (
-    <div className='bg-[#E7F4FF] mt-[16vh] p-8'>
-      <div className='flex space-x-4'>
+    <div className="bg-[#E7F4FF] mt-[16vh] p-8">
+      <div className="flex space-x-4">
         {/* Filter by category and level */}
-        <div className='w-1/4 bg-white p-4 rounded-lg shadow-md'>
-          <h2 className='text-xl font-bold mb-4'>Filter by category</h2>
-          <ul className='space-y-2'>
+        <div className="w-1/4 bg-white p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold mb-4">Filter by Category</h2>
+          <ul className="space-y-2">
             {categories.map((category) => (
               <li key={category._id}>
-                <input type='checkbox' id={category._id} className='mr-2' />
+                <input
+                  type="checkbox"
+                  id={category._id}
+                  className="mr-2"
+                  onChange={() => handleCategoryChange(category._id)}
+                />
                 <label htmlFor={category._id}>{category.categoryName}</label>
               </li>
             ))}
           </ul>
-
-          <h2 className='text-xl font-bold mt-6 mb-4'>Level</h2>
-          {levels.map((level) => (
-            <div key={level} className='mb-4'>
-              <input type='checkbox' id={level} className='mr-2' />
-              <label htmlFor={level}>{level}</label>
-            </div>
-          ))}
         </div>
 
         {/* Courses List */}
-        <div className='w-3/4'>
-          <h2 className='text-2xl font-bold mb-4'>Courses Available for you</h2>
-          {courses.length > 0 ? (
-            courses.map((course) => (
-              <div key={course._id} className='bg-white mb-4 p-4 rounded-lg shadow-md'>
-                <div className='flex'>
+        <div className="w-3/4">
+          <h2 className="text-2xl font-bold mb-4">Courses Available for You</h2>
+          {filteredCourses.length > 0 ? (
+            filteredCourses.map((course) => (
+              <div
+                key={course._id}
+                className="bg-white mb-4 p-4 rounded-lg shadow-md"
+              >
+                <div className="flex">
                   <img
                     src={course.imageUrl} // Ensure 'imageUrl' matches backend property
-                    alt='Course'
-                    className='w-1/3 h-40 object-cover rounded-md'
+                    alt="Course"
+                    className="w-1/3 h-40 object-cover rounded-md"
                   />
-                  <div className='ml-4 w-2/3'>
-                    <h3 className='text-xl font-bold'>{course.courseName}</h3>
-                    <p className='text-gray-500'>{course.description}</p>
+                  <div className="ml-4 w-2/3">
+                    <h3 className="text-xl font-bold">{course.courseName}</h3>
+                    <p className="text-gray-500">{course.description}</p>
                     <button
-                      className='mt-4 bg-yellow-500 hover:bg-purple-600 font-bold text-white py-2 px-4 rounded-lg'
+                      className="mt-4 bg-yellow-500 hover:bg-purple-600 font-bold text-white py-2 px-4 rounded-lg"
                       onClick={() => handleEnrollClick(course._id)}
                     >
                       Enroll Now
@@ -113,7 +151,7 @@ function Courses() {
               </div>
             ))
           ) : (
-            <p>No courses available at the moment.</p>
+            <p>No courses available matching the filters.</p>
           )}
         </div>
       </div>

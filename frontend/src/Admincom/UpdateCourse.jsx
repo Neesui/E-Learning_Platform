@@ -62,6 +62,7 @@ const UpdateCourse = () => {
     try {
       const res = await axios.put(`http://localhost:4001/courses/update/${courseId}`, formData);
       toast.success(res.data.message || 'Course updated successfully');
+      navigate('/ViewCourses'); // Corrected redirect
     } catch (err) {
       console.error('Error updating course:', err);
       toast.error('Failed to update course');
@@ -73,9 +74,9 @@ const UpdateCourse = () => {
     formData.append('image', e.target.files[0]);
 
     try {
-      const res = await axios.post('http://localhost:4001/uploads/', formData);
+      const res = await axios.post('http://localhost:4001/uploads', formData);
       toast.success(res.data.message || 'Image uploaded successfully');
-      setImageUrl(res.data.image);
+      setImageUrl(res.data.image); // Update imageUrl with the uploaded file name
     } catch (err) {
       toast.error(err.response?.data?.message || 'Image upload failed');
     }

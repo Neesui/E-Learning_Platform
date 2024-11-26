@@ -67,7 +67,6 @@ const ViewStudentDetails = () => {
                         student.courses.map((course, idx) => (
                           <div key={idx}>
                             <p>Course Name: {student.course}</p>
-                            <p>Progress: {course.isCompleted ? "Completed" : "In Progress"}</p>
                           </div>
                         ))
                       ) : (

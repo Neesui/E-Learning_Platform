@@ -67,7 +67,7 @@ const RecommendationCourses = () => {
 
   return (
     <div className="mt-8 ml-11 mr-11 mb-11">
-      <h2 className="text-2xl font-bold">Related Courses</h2>
+      <h2 className="text-2xl font-bold">Recommend Courses for You</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
         {recommendations.map((course, index) => (
           <div key={course._id || index} className="bg-white rounded shadow-md p-4 flex flex-col">

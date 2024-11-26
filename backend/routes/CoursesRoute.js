@@ -22,10 +22,10 @@ router.get('/getCourses', courseList);
 router.get('/courseDetails/:id', courseDetails);
 
 // Update a course
-router.put('/courses/:id', updateCourse);
+router.put('/update/:id', updateCourse);
 
 // Delete a course
-router.delete('/courses/:id', deleteCourse);
+router.delete('/delete/:id', deleteCourse);
 
 // Add a video to a specific course
 router.post('/add/:id/videos', addVideoToCourse);

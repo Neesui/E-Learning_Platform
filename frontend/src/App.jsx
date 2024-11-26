@@ -26,6 +26,7 @@ import ViewStudentDetails from './Admincom/ViewStudentDetails';
 import EditProfile from './components/EditProfile';
 import UserLayout from './UserLayout';
 import StudentInfo from './components/StudentInfo';
+import CategoryFilter from './components/FilterByCategory';
 
 function App() {
    return (
@@ -35,6 +36,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="Aboutus" element={<Aboutus />} />
             <Route path="Courses" element={<Courses />} />
+            <Route path="CategoryFilter" element={<CategoryFilter />} />
             <Route path="Courses/search/:keyword" element={<Courses />} />
             <Route path="CourseDetailsPage/:courseId" element={<CourseDetailsPage />} />
             <Route path="VideoSection" element={<VideoSection />} /> 

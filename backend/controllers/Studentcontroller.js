@@ -232,3 +232,53 @@ export const updateProgress = async (req, res) => {
     res.status(500).json({ error: "Failed to update progress" });
   }
 };
+
+
+export const enrollStudentInCourse = async (studentId, courseId) => {
+  try {
+      const student = await Student.findById(studentId);
+      const course = await Course.findById(courseId);
+
+      if (!student) throw new Error('Student not found');
+      if (!course) throw new Error('Course not found');
+
+      // Check if the course is already enrolled
+      const isAlreadyEnrolled = student.courses.some(
+          (c) => c.courseId.toString() === courseId.toString()
+      );
+      if (isAlreadyEnrolled) {
+          throw new Error('Student is already enrolled in this course');
+      }
+
+      // Add the course to the student's enrolled courses
+      student.courses.push({ courseId, progress: [] });
+      await student.save();
+
+      return { message: 'Student successfully enrolled in the course' };
+  } catch (error) {
+      return { error: error.message };
+  }
+};
+
+export const getStudentEnrolledCourses = async (studentId) => {
+  try {
+      const student = await Student.findById(studentId).populate({
+          path: 'courses.courseId',
+          select: 'courseName description imageUrl',
+      });
+
+      if (!student) throw new Error('Student not found');
+
+      const enrolledCourses = student.courses.map((enrollment) => ({
+          courseId: enrollment.courseId._id,
+          courseName: enrollment.courseId.courseName,
+          description: enrollment.courseId.description,
+          imageUrl: enrollment.courseId.imageUrl,
+          isCompleted: enrollment.isCompleted,
+      }));
+
+      return { enrolledCourses };
+  } catch (error) {
+      return { error: error.message };
+  }
+};
