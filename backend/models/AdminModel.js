@@ -25,10 +25,6 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    role: {
-      type: String,
-      default: 'admin',
-    },
     dateJoined: {
       type: Date,
       default: Date.now,
@@ -36,12 +32,7 @@ const adminSchema = new mongoose.Schema(
     lastLogin: {
       type: Date,
       default: null,
-    },
-    status: {
-      type: String,
-      enum: ['active', 'inactive'],
-      default: 'active',
-    },
+    }
   },
   { timestamps: true }
 );
