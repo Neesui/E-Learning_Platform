@@ -12,7 +12,7 @@ const domainKeywords = {
     backend: ['backend', 'server', 'database', 'api', 'node', 'express', 'django', 'flask', 'sql', 'mongodb','java'],
     devops: ['devops', 'docker', 'kubernetes', 'ci', 'cd', 'cloud', 'aws', 'azure', 'google cloud', 'infrastructure'],
     dataScience: ['data', 'machine learning', 'ai', 'artificial intelligence', 'python', 'pandas', 'numpy', 'statistics'],
-    mobile: ['mobile', 'android', 'ios', 'swift', 'kotlin', 'react native', 'flutter', 'app', 'development'],
+    mobile: ['mobile', 'android', 'kotlin', 'react native', 'flutter', 'app'],
 };
 
 // Preprocess text (remove stop words and stem words)
