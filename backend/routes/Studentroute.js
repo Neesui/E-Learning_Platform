@@ -21,8 +21,8 @@ router.get("/studentlist", studentList);
 router.get("/studentDetails/:id",studentDetails)
 router.put("/update/:id", updateStudentDetails);
 router.post("/update-progress" ,updateProgress);
-router.post('/checkenroll/:id', enrollStudentInCourse);
-router.get('/checkfetch', getStudentEnrolledCourses);
+router.post("/enroll-course", enrollStudentInCourse); // Enroll a student in a course
+router.get("/enrolled-courses/:id", getStudentEnrolledCourses); // Fetch enrolled courses for a student
 
 
 

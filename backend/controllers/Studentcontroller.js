@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import Student from "../models/StudentModel.js";
+import Student from "../models/Studentmodel.js";
 import Course from "../models/CoursesModel.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key";
@@ -135,18 +135,24 @@ export const logout = async (req, res) => {
 
 export const studentList = async (req, res) => {
   try {
-      const students = await Student.find().select("-password");
-      
-      if (!students.length) {
-          return res.status(404).json({ error: 'No students found' });
-      }
-      
-      res.status(200).json(students);
+    const students = await Student.find()
+      .select("-password") // Exclude password field
+      .populate({
+        path: "courses.courseId", // Populate the courseId inside courses array
+        select: "courseName", // Include only the courseName from the Course model
+      });
+
+    if (!students.length) {
+      return res.status(404).json({ error: "No students found" });
+    }
+
+    res.status(200).json(students);
   } catch (error) {
-      console.error('Error while retrieving students:', error);
-      res.status(500).json({ error: 'Server Error' });
+    console.error("Error while retrieving students:", error);
+    res.status(500).json({ error: "Server Error" });
   }
 };
+
 
 export const studentDetails = async (req, res) => {
   try {
@@ -191,7 +197,6 @@ export const updateStudentDetails = async (req, res) => {
   }
 };
 
-
 export const updateProgress = async (req, res) => {
   const { studentId, courseId, videoId, watchedSeconds, isCompleted } = req.body;
 
@@ -205,6 +210,9 @@ export const updateProgress = async (req, res) => {
     const student = await Student.findById(studentId);
     if (!student) return res.status(404).json({ error: "Student not found" });
 
+    // Ensure `courses` array exists
+    if (!student.courses) student.courses = [];
+
     // Find the course within the student's courses list
     let course = student.courses.find((c) => c.courseId.toString() === courseId);
     if (!course) {
@@ -213,14 +221,17 @@ export const updateProgress = async (req, res) => {
       student.courses.push(course);
     }
 
+    // Ensure `progress` array exists
+    if (!course.progress) course.progress = [];
+
     // Find the progress for the video
     const videoProgress = course.progress.find((v) => v.videoId.toString() === videoId);
     if (videoProgress) {
-      // If progress exists, update it
+      // Update progress if it exists
       videoProgress.watchedSeconds = watchedSeconds;
-      videoProgress.isCompleted = isCompleted; // Update completion status
+      videoProgress.isCompleted = isCompleted;
     } else {
-      // If no progress exists, create a new progress entry
+      // Create new progress entry if it doesn't exist
       course.progress.push({ videoId, watchedSeconds, isCompleted });
     }
 
@@ -233,7 +244,7 @@ export const updateProgress = async (req, res) => {
   }
 };
 
-
+// Enroll a student in a course
 export const enrollStudentInCourse = async (studentId, courseId) => {
   try {
       const student = await Student.findById(studentId);
@@ -242,7 +253,6 @@ export const enrollStudentInCourse = async (studentId, courseId) => {
       if (!student) throw new Error('Student not found');
       if (!course) throw new Error('Course not found');
 
-      // Check if the course is already enrolled
       const isAlreadyEnrolled = student.courses.some(
           (c) => c.courseId.toString() === courseId.toString()
       );
@@ -250,35 +260,47 @@ export const enrollStudentInCourse = async (studentId, courseId) => {
           throw new Error('Student is already enrolled in this course');
       }
 
-      // Add the course to the student's enrolled courses
+      // Log the student's courses before enrollment
+      console.log('Student courses before enrollment:', student.courses);
+
       student.courses.push({ courseId, progress: [] });
       await student.save();
 
+      // Log the student's courses after enrollment
+      console.log('Student courses after enrollment:', student.courses);
+
       return { message: 'Student successfully enrolled in the course' };
   } catch (error) {
+      console.error('Error enrolling student:', error);
       return { error: error.message };
   }
 };
 
+
+// Get enrolled courses of a student
 export const getStudentEnrolledCourses = async (studentId) => {
-  try {
-      const student = await Student.findById(studentId).populate({
-          path: 'courses.courseId',
-          select: 'courseName description imageUrl',
-      });
+    try {
+        // Populate courses and select specific fields from Course
+        const student = await Student.findById(studentId).populate({
+            path: 'courses.courseId',
+            select: 'courseName description imageUrl domain',
+        });
 
-      if (!student) throw new Error('Student not found');
+        if (!student) throw new Error('Student not found');
 
-      const enrolledCourses = student.courses.map((enrollment) => ({
-          courseId: enrollment.courseId._id,
-          courseName: enrollment.courseId.courseName,
-          description: enrollment.courseId.description,
-          imageUrl: enrollment.courseId.imageUrl,
-          isCompleted: enrollment.isCompleted,
-      }));
+        // Map the enrolled courses to a structured response
+        const enrolledCourses = student.courses.map((enrollment) => ({
+            courseId: enrollment.courseId._id,
+            courseName: enrollment.courseId.courseName,
+            description: enrollment.courseId.description,
+            imageUrl: enrollment.courseId.imageUrl,
+            domain: enrollment.courseId.domain,
+            isCompleted: enrollment.isCompleted,
+        }));
 
-      return { enrolledCourses };
-  } catch (error) {
-      return { error: error.message };
-  }
+        return { enrolledCourses };
+    } catch (error) {
+        console.error('Error fetching enrolled courses:', error);
+        return { error: error.message };
+    }
 };

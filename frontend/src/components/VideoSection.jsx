@@ -53,8 +53,8 @@ function VideoSection() {
 
     const handleProgressUpdate = async () => {
         try {
-            if (!studentId) {
-                console.error("User ID is missing");
+            if (!studentId || !courseId) {
+                console.error("Student ID or Course ID is missing");
                 return;
             }
     
@@ -64,20 +64,37 @@ function VideoSection() {
                 return;
             }
     
+            const currentIndex = videos.findIndex(video => video.url === currentVideo);
             const token = localStorage.getItem('studentToken');
-            await axios.post('http://localhost:4001/student/update-progress', {
-                studentId,
-                courseId,
-                videoId,
-                watchedSeconds,
-                isCompleted: isComplete // Use the correct variable name
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            if (!token) {
+                console.error("Authorization token is missing");
+                return;
+            }
+    
+            // Determine if the current video is completed
+            const isCompleted = progress === 100;
+    
+            await axios.post(
+                'http://localhost:4001/student/update-progress',
+                {
+                    studentId,
+                    courseId,
+                    videoId,
+                    watchedSeconds: watchedSeconds[currentIndex],
+                    isCompleted, // Pass the calculated value
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+    
+            console.log("Progress updated successfully");
         } catch (error) {
             console.error("Error updating progress:", error);
         }
     };
+    
+
     
 
     const handleVideoEnd = async () => {

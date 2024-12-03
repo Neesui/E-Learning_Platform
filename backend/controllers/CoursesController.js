@@ -3,36 +3,32 @@ import Course from '../models/CoursesModel.js';
 // Insert a new course
 export const postCourse = async (req, res) => {
     try {
-        const { courseName, description, imageUrl, categoryId } = req.body;
+        const { courseName, description, imageUrl, categoryId, domain, similarity } = req.body;
 
-        // Check for an existing course with the same name (case-insensitive)
         const existingCourse = await Course.findOne({
-            courseName: { $regex: new RegExp(`^${courseName}$`, 'i') } // Case-insensitive regex check
+            courseName: { $regex: new RegExp(`^${courseName}$`, 'i') },
         });
 
         if (existingCourse) {
             return res.status(400).json({ error: `The course "${courseName}" already exists.` });
         }
 
-        // Create a new course instance
         const course = new Course({
-            courseName, // Store the original course name
+            courseName,
             description,
             imageUrl,
             categoryId,
+            domain,
+            similarity,
         });
 
-        // Save the new course
         const savedCourse = await course.save();
         res.status(201).json(savedCourse);
     } catch (error) {
-        console.error('Error while creating course:', error);
+        console.error('Error while creating course:', error.message);
         res.status(500).json({ error: 'Server Error' });
     }
 };
-
-
-
 
 // Retrieve all courses with optional search and pagination
 export const courseList = async (req, res) => {

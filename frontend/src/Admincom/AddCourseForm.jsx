@@ -7,6 +7,7 @@ const AddCoursesForm = () => {
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [categoryId, setCategoryId] = useState('');
+  const [domain, setDomain] = useState(''); // Domain field
   const [categories, setCategories] = useState([]); // State to hold category options
   const [error, setError] = useState('');
 
@@ -27,16 +28,20 @@ const AddCoursesForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!courseName || !description || !imageUrl || !categoryId) {
+    if (!courseName || !description || !imageUrl || !categoryId || !domain) {
       toast.error('All fields are required');
       return;
     }
+
+    // Split the domain string into an array of domains, assuming domains are separated by commas or spaces
+    const domainArray = domain.split(',').map(item => item.trim());
 
     const formData = {
       courseName,
       description,
       imageUrl,
       categoryId, // Add categoryId to form data
+      domain: domainArray, // Add domain array to form data
     };
 
     try {
@@ -45,6 +50,7 @@ const AddCoursesForm = () => {
       setDescription('');
       setImageUrl('');
       setCategoryId('');
+      setDomain('');
       setError('');
       toast.success(res.data.message || 'Course added successfully');
     } catch (err) {
@@ -70,7 +76,7 @@ const AddCoursesForm = () => {
   return (
     <>
       <Toaster />
-      <div className="ml-[20vh] w-[100vh] h-[80vh] mt-5 bg-white p-6 rounded-lg shadow-md">
+      <div className="ml-[20vh] w-[100vh] h-[99vh] mt-5 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Add New Course</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -114,6 +120,17 @@ const AddCoursesForm = () => {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div>
+            <label className="block text-gray-600 mb-1">Domain:</label>
+            <input
+              type="text"
+              value={domain}
+              onChange={(e) => setDomain(e.target.value)}
+              className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter domains separated by commas (e.g., Data Science, Web Development)"
+            />
           </div>
 
           <button

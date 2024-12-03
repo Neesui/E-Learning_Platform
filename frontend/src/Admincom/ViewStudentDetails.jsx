@@ -10,22 +10,15 @@ const ViewStudentDetails = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await axios.get('http://localhost:4001/student/studentlist'); // Adjust endpoint to fetch all students
+        const res = await axios.get('http://localhost:4001/student/studentlist'); // Backend endpoint
         const fetchedStudents = res.data;
 
-        // Log data to check if it's correct
-        console.log('Fetched Students:', fetchedStudents);
-
-        // Show success toast
+        console.log('Fetched Students:', fetchedStudents); // Debug fetched data
         toast.success('Students loaded successfully!');
-
-        // Set the student data
         setStudents(fetchedStudents || []);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching students:', err);
-
-        // Show error toast
         toast.error('Failed to load students. Please try again later.');
         setLoading(false);
       }
@@ -64,9 +57,13 @@ const ViewStudentDetails = () => {
                     <td className="border border-gray-300 px-4 py-2">{student.phoneNumber}</td>
                     <td className="border border-gray-300 px-4 py-2">
                       {student.courses && student.courses.length > 0 ? (
-                        student.courses.map((course, idx) => (
-                          <div key={idx}>
-                            <p>Course Name: {student.course}</p>
+                        student.courses.map((enrollment, index) => (
+                          <div key={index}>
+                            {enrollment.courseId ? (
+                              <p>{enrollment.courseId.courseName}</p> // Access courseName via courseId
+                            ) : (
+                              <p>Course not found</p>
+                            )}
                           </div>
                         ))
                       ) : (

@@ -72,12 +72,12 @@ const RecommendationCourses = () => {
         {recommendations.map((course, index) => (
           <div key={course._id || index} className="bg-white rounded shadow-md p-4 flex flex-col">
             <img
-              src={course.image || '/path/to/default-image.jpg'}
+              src={course.imageUrl || '/path/to/default-image.jpg'}
               alt={course.name || "Course"}
               className="w-full h-48 object-cover rounded-md"
             />
             <div className="mt-2 flex-grow">
-              <p className="font-bold">{course.name || "Untitled Course"}</p>
+              <p className="font-bold">{course.courseName || "Untitled Course"}</p>
               <p className="text-gray-500">{course.description || "No description available."}</p>
             </div>
             <button

@@ -1,9 +1,9 @@
 import express from 'express';
-import { getStudentRecommendations } from '../controllers/RecommendationController.js'; // Import the controller
+import { getStudentRecommendations } from '../controllers/RecommendationController.js';
 
 const router = express.Router();
 
-// Route to get similar course recommendations based on courseId
+// Route to get course recommendations based on studentId
 router.get('/get/:studentId', getStudentRecommendations);
 
 export default router;
