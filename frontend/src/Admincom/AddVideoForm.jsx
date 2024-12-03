@@ -17,7 +17,7 @@ const AddVideoForm = () => {
         const res = await axios.get('http://localhost:4001/courses/getCourses');
         const { courses } = res.data || { courses: [] };
         setCourses(courses);
-        toast.success('Courses loaded successfully!');
+        // toast.success('Courses loaded successfully!');
       } catch (err) {
         console.error('Error fetching courses:', err);
         toast.error('Failed to load courses');

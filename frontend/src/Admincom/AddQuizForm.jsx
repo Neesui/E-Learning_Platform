@@ -13,7 +13,7 @@ const AddQuizForm = () => {
       try {
         const res = await axios.get('http://localhost:4001/courses/getCourses');
         setCourses(res.data.courses || []);
-        toast.success('Courses loaded successfully!');
+        // toast.success('Courses loaded successfully!');
       } catch (err) {
         console.error('Error fetching courses:', err);
         toast.error('Failed to load courses');

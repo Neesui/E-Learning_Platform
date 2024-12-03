@@ -14,7 +14,7 @@ const ViewStudentDetails = () => {
         const fetchedStudents = res.data;
 
         console.log('Fetched Students:', fetchedStudents); // Debug fetched data
-        toast.success('Students loaded successfully!');
+        // toast.success('Students loaded successfully!');
         setStudents(fetchedStudents || []);
         setLoading(false);
       } catch (err) {
@@ -60,7 +60,7 @@ const ViewStudentDetails = () => {
                         student.courses.map((enrollment, index) => (
                           <div key={index}>
                             {enrollment.courseId ? (
-                              <p>{enrollment.courseId.courseName}</p> // Access courseName via courseId
+                              <p>Course Name : {enrollment.courseId.courseName}</p> // Access courseName via courseId
                             ) : (
                               <p>Course not found</p>
                             )}

@@ -17,7 +17,7 @@ const ViewCategories = () => {
           const cat1 = category || [ ]
           
           // Show success toast with meaningful message
-          toast.success('Category loaded successfully!');
+          // toast.success('Category loaded successfully!');
           
           // Set the courses data
           // setCourses(Array.isArray(res.data) ? res.data.courses : []);

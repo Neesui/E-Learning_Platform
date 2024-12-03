@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 const StudentInfo = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [studentDetails, setStudentDetails] = useState({});
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   useEffect(() => {
@@ -32,9 +31,8 @@ const StudentInfo = () => {
         const fetchedStudent = res.data;
 
         if (fetchedStudent) {
-          toast.success('Student data loaded successfully!');
+          // toast.success('Student data loaded successfully!');
           setStudent(fetchedStudent);
-          setStudentDetails(fetchedStudent); // Initialize studentDetails state for editing
         } else {
           toast.error('Student not found.');
         }
@@ -70,7 +68,7 @@ const StudentInfo = () => {
                   <th className="border border-gray-300 px-4 py-2 text-left">Email</th>
                   <th className="border border-gray-300 px-4 py-2 text-left">Address</th>
                   <th className="border border-gray-300 px-4 py-2 text-left">Phone Number</th>
-                  <th className="border border-gray-300 px-4 py-2 text-left">Courses Enrolled</th> 
+                  <th className="border border-gray-300 px-4 py-2 text-left">Courses Enrolled</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,15 +78,15 @@ const StudentInfo = () => {
                   <td className="border border-gray-300 px-4 py-2">{student.address}</td>
                   <td className="border border-gray-300 px-4 py-2">{student.phoneNumber}</td>
                   <td className="border border-gray-300 px-4 py-2">
-                     {student.courses && student.courses.length > 0 ? (
+                    {student.courses && student.courses.length > 0 ? (
                       student.courses.map((course, idx) => (
                         <div key={idx}>
-                          <p>Course Name: {course.courseId}</p>
+                          <p>Course Name: {course.courseId.courseName}</p>
                         </div>
                       ))
                     ) : (
                       <p>No courses enrolled</p>
-                    )} 
+                    )}
                   </td>
                 </tr>
               </tbody>

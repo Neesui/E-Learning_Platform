@@ -156,14 +156,21 @@ export const studentList = async (req, res) => {
 
 export const studentDetails = async (req, res) => {
   try {
-      const student = await Student.findById(req.params.id); // Assuming Student is the model name
-      if (!student) {
-          return res.status(404).json({ error: 'Student not found' });
-      }
-      res.status(200).json(student);
+    const student = await Student.findById(req.params.id)
+      .select("-password") // Exclude sensitive data like password
+      .populate({
+        path: "courses.courseId", // Populate the courseId inside the courses array
+        select: "courseName", // Include only courseName from the Course model
+      });
+
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+
+    res.status(200).json(student);
   } catch (error) {
-      console.error('Error while retrieving student details:', error);
-      res.status(500).json({ error: 'Server Error' });
+    console.error("Error while retrieving student details:", error);
+    res.status(500).json({ error: "Server Error" });
   }
 };
 

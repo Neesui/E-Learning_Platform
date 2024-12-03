@@ -16,7 +16,7 @@ const ViewCourses = () => {
         const { courses } = res.data;
         setCourses(courses || []);
         setLoading(false);
-        toast.success('Courses loaded successfully!');
+        // toast.success('Courses loaded successfully!');
       } catch (err) {
         console.error('Error fetching courses:', err);
         toast.error('Failed to load courses. Please try again later.');

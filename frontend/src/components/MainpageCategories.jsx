@@ -29,12 +29,12 @@ const MainpageCategories = () => {
   return (
     <>
       {/* Explore Course Categories Section */}
-      <section className="py-12">
+      <section className="py-10">
         <h2 className="text-[5vh] font-bold text-center mb-6">Explore Course Categories</h2>
-        <div className="carousel rounded-box pl-3 flex overflow-x-auto ml-[8vh]">
+        <div className="carousel rounded-box pl-3 flex overflow-x-auto ml-[3vh]">
           {categories.map((category) => (
             <div key={category._id} className="carousel-item w-[46vh] p-4 shadow-lg">
-              <div className="flex flex-col">
+              <div className="flex flex-col ">
                 <img
                   src={`${category.imageUrl}`} // Prepend the base URL to the image path
                   alt={category.categoryName} // Use the categoryName for alt text
